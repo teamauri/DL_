@@ -1,0 +1,43 @@
+# 日常用品遮挡检测配置
+# 用法: python src/detect_occlusion.py --config config/occlusion.yaml
+
+# 模式切换: image(图片) / video(视频) / camera(摄像头)
+mode: image
+
+# 输入: 图片路径 / 视频路径 / 摄像头索引(0 或 1)
+source: data_9.14/books_pile.jpg
+
+# 是否弹窗显示结果 (服务器/无界面环境设为 false)
+show: true
+
+model:
+  path: model/yolov8n.pt   # 预训练权重
+  conf: 0.25         # 置信度阈值
+  imgsz: 640         # 推理尺寸
+
+output_dir: runs/occlusion   # 结果输出目录
+
+# 日常用品类别 (COCO 类别 id) —— 按需增删
+classes:
+  book: 73          # 书本
+  bottle: 39        # 水瓶
+  cup: 41           # 杯子
+  bowl: 45          # 碗
+  spoon: 44         # 勺子
+  fork: 42          # 叉子
+  knife: 43         # 刀
+  cell phone: 67    # 手机
+  laptop: 63        # 笔记本电脑
+  mouse: 64         # 鼠标
+  keyboard: 66      # 键盘
+  remote: 65        # 遥控器
+  tv: 62            # 电视
+  clock: 74         # 时钟
+  scissors: 76      # 剪刀
+  toothbrush: 79    # 牙刷
+  hair drier: 78    # 吹风机
+
+# 遮挡检测: 监控这些类是否被其它物体遮挡
+occlusion:
+  target: [book]      # 目标类 (可写多个, 如 [book, cup])
+  iou_threshold: 0.5  # IoU 超过该值判定为遮挡
